@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portafolio Digital de Joaquín</title>
+<style>
+  :root{
+    --bg:#0b1020;
+    --bg-soft:#131a33;
+    --card:#161e3d;
+    --line:#27325c;
+    --text:#e8ecf8;
+    --muted:#a3adcd;
+    --accent:#5eead4;
+    --accent2:#818cf8;
+    --accent3:#f472b6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"Segoe UI",system-ui,-apple-system,sans-serif;
+    background:
+      radial-gradient(1000px 600px at 15% -10%, #1e2a5a 0%, transparent 60%),
+      radial-gradient(800px 500px at 110% 10%, #2a1e4d 0%, transparent 55%),
+      var(--bg);
+    color:var(--text);
+    min-height:100vh;
+    line-height:1.6;
+  }
+  .wrap{max-width:1000px;margin:0 auto;padding:0 20px 80px}
+
+  header{padding:70px 0 40px;text-align:center}
+  .avatar{
+    width:200px;height:200px;border-radius:50%;margin:0 auto 22px;
+    padding:5px;
+    background:linear-gradient(135deg,var(--accent),var(--accent2),var(--accent3));
+    box-shadow:0 12px 40px rgba(94,234,212,.35),0 0 90px rgba(129,140,248,.30);
+    animation:glow 3.2s ease-in-out infinite;
+  }
+  .avatar img{
+    width:100%;height:100%;border-radius:50%;object-fit:cover;object-position:center top;
+    display:block;border:4px solid var(--bg);
+  }
+  @keyframes glow{
+    0%,100%{box-shadow:0 12px 40px rgba(94,234,212,.35),0 0 70px rgba(129,140,248,.25)}
+    50%{box-shadow:0 12px 46px rgba(244,114,182,.35),0 0 110px rgba(129,140,248,.45)}
+  }
+  .avatar-cap{
+    text-align:center;color:var(--muted);font-size:14px;letter-spacing:.5px;
+    margin:-8px 0 18px;
+  }
+  .avatar-cap strong{color:var(--accent);font-weight:700}
+  h1{font-size:clamp(30px,6vw,46px);letter-spacing:-.5px}
+  h1 span{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .tagline{color:var(--muted);margin-top:10px;font-size:18px}
+  .badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+  .badge{
+    background:rgba(94,234,212,.10);border:1px solid rgba(94,234,212,.35);
+    color:var(--accent);padding:6px 14px;border-radius:999px;font-size:14px;
+  }
+
+  nav{
+    position:sticky;top:0;z-index:10;margin:34px 0 40px;
+    background:rgba(11,16,32,.85);backdrop-filter:blur(10px);
+    border:1px solid var(--line);border-radius:16px;padding:8px;
+    display:flex;gap:6px;flex-wrap:wrap;justify-content:center;
+  }
+  nav button{
+    background:none;border:none;color:var(--muted);font-size:15px;font-weight:600;
+    padding:12px 20px;border-radius:11px;cursor:pointer;font-family:inherit;
+    transition:.2s;
+  }
+  nav button:hover{color:var(--text);background:var(--bg-soft)}
+  nav button.active{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#0b1020}
+
+  section{display:none;animation:fade .35s ease}
+  section.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+  h2{font-size:26px;margin-bottom:8px;display:flex;align-items:center;gap:10px}
+  h2::before{content:"";width:5px;height:26px;border-radius:3px;background:linear-gradient(var(--accent),var(--accent2))}
+  .lead{color:var(--muted);margin-bottom:28px}
+
+  .grid{display:grid;gap:18px}
+  .grid.two{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;
+    transition:.25s;
+  }
+  .card:hover{transform:translateY(-4px);border-color:var(--accent2)}
+  .card h3{font-size:19px;margin-bottom:8px}
+  .card p{color:var(--muted);font-size:15px}
+
+  .timeline{position:relative;padding-left:34px}
+  .timeline::before{
+    content:"";position:absolute;left:11px;top:6px;bottom:6px;width:2px;
+    background:linear-gradient(var(--accent),var(--accent2),transparent);
+  }
+  .mes{position:relative;margin-bottom:20px}
+  .mes::before{
+    content:"";position:absolute;left:-29px;top:22px;width:14px;height:14px;border-radius:50%;
+    background:var(--accent);border:3px solid var(--bg);box-shadow:0 0 0 3px rgba(94,234,212,.2);
+  }
+  .mes.current::before{background:var(--accent3);box-shadow:0 0 0 4px rgba(244,114,182,.25)}
+  .mes .card{padding:20px 22px}
+  .mes-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+  .mes-head h3{font-size:18px;margin:0}
+  .pill{font-size:12px;font-weight:700;padding:4px 11px;border-radius:999px;background:var(--bg-soft);border:1px solid var(--line);color:var(--muted)}
+  .pill.done{background:rgba(94,234,212,.12);border-color:rgba(94,234,212,.4);color:var(--accent)}
+  .pill.doing{background:rgba(244,114,182,.12);border-color:rgba(244,114,182,.4);color:var(--accent3)}
+  .pill.plan{background:rgba(129,140,248,.12);border-color:rgba(129,140,248,.4);color:var(--accent2)}
+  .tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+  .tags span{font-size:12px;color:var(--muted);background:var(--bg-soft);padding:4px 10px;border-radius:7px;border:1px solid var(--line)}
+  .empty{opacity:.55;font-style:italic}
+
+  .obj{
+    background:var(--card);border:1px solid var(--line);border-left:5px solid var(--accent);
+    border-radius:16px;padding:26px;margin-bottom:20px;
+  }
+  .obj:nth-child(2){border-left-color:var(--accent2)}
+  .obj:nth-child(3){border-left-color:var(--accent3)}
+  .obj-num{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:42px;height:42px;border-radius:12px;font-weight:800;font-size:20px;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));color:#0b1020;margin-bottom:14px;
+  }
+  .obj h3{font-size:21px;margin-bottom:8px}
+  .obj p{color:var(--muted)}
+  .obj ul{margin:14px 0 0 20px;color:var(--muted);font-size:15px}
+  .obj li{margin-bottom:6px}
+  .meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+  .meta span{font-size:13px;padding:5px 12px;border-radius:8px;background:var(--bg-soft);border:1px solid var(--line);color:var(--muted)}
+
+  footer{text-align:center;color:var(--muted);font-size:14px;margin-top:60px;padding-top:24px;border-top:1px solid var(--line)}
+  @media(max-width:520px){ nav button{padding:10px 14px;font-size:14px} .wrap{padding:0 14px 60px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <figure style="margin:0">
+      <div class="avatar">
+        <img src="images.jpeg" alt="Elon Musk, uno de las personas más controversiales de la historia de la IA">
+      </div>
+      <figcaption class="avatar-cap"><strong>Elon Musk</strong> · la figura más controversiale de la historia de la IA</figcaption>
+    </figure>
+    <h1>Portafolio Digital de <span>Joaquín</span></h1>
+    <p class="tagline">Tecnología · Ciencia · Ingeniería · Sustainability</p>
+    <div class="badges">
+      <span class="badge">Robótica</span>
+      <span class="badge">STEM</span>
+      <span class="badge">Inteligencia Artificial</span>
+      <span class="badge">Medioambiente</span>
+    </div>
+  </header>
+
+  <nav>
+    <button class="active" data-tab="quien">Quién soy</button>
+    <button data-tab="proyectos">Proyectos 2026</button>
+    <button data-tab="objetivos">Objetivos 5 años</button>
+  </nav>
+
+  <section id="quien" class="active">
+    <h2>Quién soy</h2>
+    <p class="lead">Mi trayectoria en breve</p>
+
+    <div class="card" style="margin-bottom:22px">
+      <p>Soy Joaquín, un estudiante apasionado por la tecnología que quiere convertir lo que aprende en algo útil para los demás. Empecé programando y trabajando con robots; con el tiempo descubrí que la ciencia y la ingeniería pueden servir directamente a las personas que me rodean.</p>
+      <p style="margin-top:14px">Mi camino está guiado por tres ejes: aprender para enseñar, dominar las herramientas del futuro —como la inteligencia artificial— y cuidar el lugar donde vivo. Quiero ser la persona que le muestre a otros niños de mi comunidad que la tecnología es una herramienta real, al alcance de todos.</p>
+    </div>
+
+    <div class="grid two">
+      <div class="card">
+        <h3>Mi inicio</h3>
+        <p>Primeros pasos con electrónica y programación: LEDs, motores, sensores y lógica de control. Aprendí a pensar como ingeniero, descomponiendo un problema grande en partes pequeñas y resolubles.</p>
+      </div>
+      <div class="card">
+        <h3>Mi presente</h3>
+        <p>Trabajo con mBot y microcontroladores, construyendo robots que detectan y reaccionan a su entorno. Cada proyecto es un experimento para entender mejor cómo funciona la tecnología por dentro.</p>
+      </div>
+      <div class="card">
+        <h3>Mi motivación</h3>
+        <p>Compartir. No me conformo con entender algo yo solo: mi meta es transmitirlo a los niños de mi comunidad, porque el conocimiento que no se comparte se pierde.</p>
+      </div>
+      <div class="card">
+        <h3>Mi mirada</h3>
+        <p>El progreso tecnológico solo vale si deja un ambiente mejor. Por eso también me interesa la sostenibilidad y el desarrollo de soluciones limpias.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="proyectos">
+    <h2>Proyectos realizados en 2026</h2>
+    <p class="lead">Mi ruta de aprendizaje mes a mes</p>
+
+    <div class="timeline">
+      <div class="mes current">
+        <div class="card">
+          <div class="mes-head">
+            <h3>Enero</h3>
+            <span class="pill doing">En curso</span>
+          </div>
+          <p><strong>Test de diagnóstico para Makeblock mBot.</strong> Programa de verificación por etapas que comprueba el correcto funcionamiento de LEDs, zumbador, motores y sensores básicos del robot (seguidor de línea y botón). El objetivo es diagnosticar qué componente falla antes de empezar a programar comportamiento.</p>
+          <div class="tags"><span>Arduino</span><span>C++</span><span>Robótica</span><span>Diagnóstico</span></div>
+        </div>
+      </div>
+
+      <div class="mes">
+        <div class="card">
+          <div class="mes-head"><h3>Febrero</h3><span class="pill plan">Próximo</span></div>
+          <p><strong>Robot seguidor de línea autónomo.</strong> Implementar control PID sobre los sensores infrarrojos para que el mBot recorra circuitos complejos sin perderse, registrando sus sensores en el Monitor Serie.</p>
+          <div class="tags"><span>Algoritmos</span><span>Sensores</span></div>
+        </div>
+      </div>
+      <div class="mes">
+        <div class="card">
+          <div class="mes-head"><h3>Marzo</h3><span class="pill plan">Próximo</span></div>
+          <p><strong>Primer proyecto de STEM.</strong> Construir y documentar un experimento completo de ciencia, tecnología, robótica, ingeniería y matemáticas para poder replicarlo como taller con niños de mi comunidad.</p>
+          <div class="tags"><span>STEM</span><span>Documentación</span><span>Docencia</span></div>
+        </div>
+      </div>
+      <div class="mes">
+        <div class="card">
+          <div class="mes-head"><h3>Abril</h3><span class="pill plan">Próximo</span></div>
+          <p><strong>Curso virtual de STEM.</strong> Iniciar la formación en línea para reforzar capacidades en tecnología, ciencia e ingeniería, y abrirme al mundo de la inteligencia artificial.</p>
+          <div class="tags"><span>Autoaprendizaje</span><span>IA</span></div>
+        </div>
+      </div>
+      <div class="mes">
+        <div class="card">
+          <div class="mes-head"><h3>Mayo</h3><span class="pill plan">Próximo</span></div>
+          <p><strong>Prototipo de reciclaje inteligente.</strong> Un sistema con Arduino que detecta el tipo de residuo y separa automáticamente los materiales reciclables, y depositarlos luego en los contenedores correctos.</p>
+          <div class="tags"><span>Sostenibilidad</span><span>Arduino</span></div>
+        </div>
+      </div>
+      <div class="mes">
+        <div class="card">
+          <div class="mes-head"><h3>Junio</h3><span class="pill plan">Próximo</span></div>
+          <p><strong>Introducción al machine learning.</strong> Entrenar un primer modelo con tutoriales y datasets propios para aprender los fundamentos de la IA desde cero.</p>
+          <div class="tags"><span>Python</span><span>Machine Learning</span></div>
+        </div>
+      </div>
+      <div class="mes">
+        <div class="card">
+          <div class="mes-head"><h3>Julio</h3><span class="pill plan">Próximo</span></div>
+          <p><strong>Taller de robótica en mi comunidad.</strong> Reunir a niños del barrio para enseñarles a programar y construir su primer robot. El proyecto que más me importa del año.</p>
+          <div class="tags"><span>Comunidad</span><span>Enseñanza</span></div>
+        </div>
+      </div>
+      <div class="mes">
+        <div class="card">
+          <div class="mes-head"><h3>Agosto</h3><span class="pill plan">Próximo</span></div>
+          <p><strong>Robot de limpieza con IA.</strong> Un vehículo autónomo que combina sensores, visión por computadora y machine learning para identificar y recoger residuos en calles y áreas públicas.</p>
+          <div class="tags"><span>IA</span><span>Visión por computadora</span><span>Ecología</span></div>
+        </div>
+      </div>
+      <div class="mes">
+        <div class="card">
+          <div class="mes-head"><h3>Septiembre</h3><span class="pill plan">Próximo</span></div>
+          <p><strong>Preparación para la universidad.</strong> Consolidar portafolio, CV y cartas de recomendación; repasar matemáticas, física y programación para el proceso de admisión.</p>
+          <div class="tags"><span>Admisiones</span><span>Matemáticas</span></div>
+        </div>
+      </div>
+      <div class="mes">
+        <div class="card">
+          <div class="mes-head"><h3>Octubre</h3><span class="pill plan">Próximo</span></div>
+          <p><strong>Postulación al MIT.</strong> Presentar mi aplicación a la universidad con el propósito de seguir profundizando en inteligencia artificial y ingeniería.</p>
+          <div class="tags"><span>MIT</span><span>IA</span><span>Universidad</span></div>
+        </div>
+      </div>
+      <div class="mes">
+        <div class="card">
+          <div class="mes-head"><h3>Noviembre</h3><span class="pill plan">Próximo</span></div>
+          <p><strong>Estudio de mercado y plan de negocio.</strong> Investigar la situación de residuos en mi comunidad, definir la propuesta de valor y calcular los costos de arranque de la empresa.</p>
+          <div class="tags"><span>Emprendimiento</span><span>Planificación</span></div>
+        </div>
+      </div>
+      <div class="mes">
+        <div class="card">
+          <div class="mes-head"><h3>Diciembre</h3><span class="pill plan">Próximo</span></div>
+          <p><strong>Resumen anual y balance.</strong> Documentar todo lo aprendido, medir cuánto avancé respecto a mis objetivos y trazar la hoja de ruta del 2027.</p>
+          <div class="tags"><span>Reflexión</span><span>Metas</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="objetivos">
+    <h2>Mis objetivos para los próximos 5 años</h2>
+    <p class="lead">Tres metas que guían mi camino</p>
+
+    <div class="obj">
+      <div class="obj-num">1</div>
+      <h3>Completar el curso virtual de STEM</h3>
+      <p>Mi primer objetivo es entrar al curso virtual de STEM con el propósito de ganarme la certificación y disparar mis capacidades, especialmente en <strong>tecnología, ciencia e ingeniería</strong>. No lo hago solo por mí: la verdadera meta es poder aprender hoy lo que mañana voy a enseñarles a los niños de mi comunidad.</p>
+      <ul>
+        <li>Completar la certificación del curso en línea</li>
+        <li>Dominar los fundamentos de tecnología, ciencia e ingeniería</li>
+        <li>Preparar talleres prácticos de STEM para niños</li>
+        <li>Crear contenido didáctico que otros instructores puedan reutilizar</li>
+      </ul>
+      <div class="meta"><span>⏱ Corto plazo</span><span>🎓 Formación</span><span>👩‍🏫 Impacto social</span></div>
+    </div>
+
+    <div class="obj">
+      <div class="obj-num">2</div>
+      <h3>Postularme al MIT</h3>
+      <p>Como segundo objetivo, me postreulo a la <strong>universidad del MIT</strong>. Es el paso para seguir mejorando en lo que más me apasiona: la <strong>inteligencia artificial</strong>. Quiero formarme en una institución de élite, rodeado de los mejores, y llevar ese conocimiento a un nivel de investigación real.</p>
+      <ul>
+        <li>Preparar y entregar mi aplicación completa</li>
+        <li>Dominar los fundamentos de IA y machine learning</li>
+        <li>Ampliar mi portafolio con proyectos de investigación</li>
+        <li>Mantener la motivación durante todo el proceso</li>
+      </ul>
+      <div class="meta"><span>⏱ Mediano plazo</span><span>🤖 Inteligencia Artificial</span><span>🎓 Educación superior</span></div>
+    </div>
+
+    <div class="obj">
+      <div class="obj-num">3</div>
+      <h3>Fundar mi propia empresa</h3>
+      <p>Y como tercer y último objetivo, al graduarme voy a empezar <strong>una empresa propia</strong>. Necesito dos cosas: ganar dinero y ganar experiencia real como profesional. Y lo haré para resolver un problema de mi comunidad: <strong>ecosistemas limpios, sin residuos químicos</strong>, cuidando el ambiente que le dejo a los niños que quiero enseñar.</p>
+      <ul>
+        <li>Identificar el problema ambiental concreto de mi comunidad</li>
+        <li>Diseñar y lanzar la primera solución o servicio</li>
+        <li>Generar ingresos sustentables para financiar los talleres infantiles</li>
+        <li>Contratar y formar a jóvenes de la comunidad</li>
+        <li>Escalar la iniciativa a más ciudades o regiones</li>
+      </ul>
+      <div class="meta"><span>⏱ Largo plazo</span><span>🌱 Sostenibilidad</span><span>💼 Emprendimiento</span><span>🤝 Comunidad</span></div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Portafolio Digital de Joaquín · 2026</p>
+  </footer>
+</div>
+
+<script>
+  const botones = document.querySelectorAll('nav button');
+  const secciones = document.querySelectorAll('section');
+
+  botones.forEach(b => {
+    b.addEventListener('click', () => {
+      botones.forEach(x => x.classList.remove('active'));
+      secciones.forEach(s => s.classList.remove('active'));
+      b.classList.add('active');
+      document.getElementById(b.dataset.tab).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+</script>
+</body>
+</html>
